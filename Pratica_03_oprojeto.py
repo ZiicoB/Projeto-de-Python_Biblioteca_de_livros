@@ -48,7 +48,7 @@ def principalMenu(): #Terminado
 
 def meusLivros():
     print("=-="*8)
-    print("{:<5}{}".format("",f"{azul}MEUS LIVROS{fimCor}"))
+    print("{:<6}{}".format("",f"{azul}MEUS LIVROS{fimCor}"))
     print("=-="*8)
     
     print(f"1- Novo Livro\n2- Lista por Categoria\n3- Lista por Altor\n4- Alterar Livro\n0- Voltar")
