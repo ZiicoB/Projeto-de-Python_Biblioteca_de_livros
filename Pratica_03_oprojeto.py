@@ -1,12 +1,12 @@
 import os
 os.system("cls")
 
-#Generos existentes para verificação e adição de novos generos (ja que não pode ser dividido em mais de 1 arquivo)
-generos = ["Romance","Biografia","Fantasia","Infantil","Ficção","Aventura","Policial","Terror"]
+#Categorias existentes para verificação e adição de novas Categorias (ja que não pode ser dividido em mais de 1 arquivo)
+categorias = ["Romance","Biografia","Fantasia","Infantil","Ficção","Aventura","Policial","Terror"]
 
 #comandos retorno
 enter = "x5s8e2"
-#Teste de envio
+
 #cores 
 vermelho = "\033[91m"
 verde = "\033[32m"
@@ -18,14 +18,13 @@ fimCor = "\033[m"
 # menu principal
 menuMain = "{:<3}{}".format("",f"{azul} MENU PRINCIPAL {fimCor}")
 
-menu = "{} {}".format("\t","R$")
-
 def principalMenu(): #Terminado
     print("=-="*8)
     print(f"{menuMain}")
     print("=-="*8)
     
-    print(f"{verde}1) Meus Livros\n2) Quero Comprar{fimCor}\n{vermelho}0) Sair{fimCor}")
+    print(f"1- Meus Livros\n2- Lista de Desejos\n0- Encerrar")
+    print("=-="*8)
     opMenuMain= int(input("Opção: "))
     os.system("cls")
     
@@ -34,60 +33,39 @@ def principalMenu(): #Terminado
         meusLivros()
     elif opMenuMain == 2:
         os.system("cls")
-        queroComprar()        
-    elif opMenuMain == 0:
+        listaDesejos()        
+    elif opMenuMain == 0: # Fazer tratramento de erro para (Caracter e Str)
         os.system("cls")
-        print(f"{vermelho}PROGRAMA FINALIZADO!{fimCor}")
+        print(f"{vermelho}PROGRAMA FINALIZADO!{fimCor}\n")
         return
     else:
-        print(f"{vermelho}Opção não valida !\n(Enter) para retornar.{fimCor}")
+        print(f"{vermelho}Opção não valida !{fimCor}\nPressione {vermelho}(Enter){fimCor}.")
         retorno1 = input()
         if (retorno1 != enter):
             os.system("cls")
             principalMenu()
 
 
-
 def meusLivros():
     print("=-="*8)
     print("{:<5}{}".format("",f"{azul}MEUS LIVROS{fimCor}"))
     print("=-="*8)
-
-    with open("teste.csv", "r", encoding="utf-8") as biblioteca: #"r" leitura "rt+"
-        linhas = biblioteca.readlines()
-        #read() => le todo o arquivo como uma so informação
-        #readlines() => le cada linha separada do arquivo
-        #write() =>adicionar uma informação na linha usanro "W" "A"
-        linha  = "| {:<30} | {:^9} | {:^22} | {:^20} | {:^10} "
-        linha2 = "| {:<30} | {:^9} | {:^22} | {:^20} | R${:^10} "
-        cabecalho = linha.format("Título do Livro","Favorito","Autor","Categoria","Valor")
-        
-        print(cabecalho)
-        print("=" * len(cabecalho))
-
-        somatotal = 0
-        for informacao in linhas:
-            info = informacao.strip().split(",") #retira espaçamentos e le velores apos a virgula
-            nome = info[0]
-            favorito = info[1]
-            categoria = info[2]
-            altor = info[3]
-            valor = float(info[4])
-
-            print(linha2.format(nome,favorito,categoria,altor,valor))
-            somatotal += valor
-        print("=" * len(cabecalho))
-        print(f"Valor total da coleção: R$ {somatotal}\n")
-
     
-        
-
-
-def queroComprar():
+    print(f"1- Novo Livro\n2- Lista por Categoria\n3- Lista por Altor\n4- Alterar Livro\n0- Voltar")
     print("=-="*8)
-    print("{:<5}{}".format("",f"{azul}QUERO COMPRAR{fimCor}"))
+    opMeusLivros= int(input("Opção: "))
+    os.system("cls")
+
+
+def listaDesejos():
+    print("=-="*8)
+    print("{:<4}{}".format("",f"{azul}LISTA DE DESEJOS{fimCor}"))
     print("=-="*8)
 
+    print(f"1- Novo Livro\n2- Alterar Livro\n0- Voltar")
+    print("=-="*8)
+    opMeusLivros= int(input("Opção: "))
+    os.system("cls")
 
 
 def startar():
