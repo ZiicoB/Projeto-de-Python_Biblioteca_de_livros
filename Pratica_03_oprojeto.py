@@ -6,8 +6,8 @@ generos = ["Romance","Biografia","Fantasia","Infantil","Ficção","Aventura","Po
 
 #comandos retorno
 enter = "x5s8e2"
-
-#cores
+#Teste de envio
+#cores 
 vermelho = "\033[91m"
 verde = "\033[32m"
 amarelo = "\033[33m"
