@@ -12,7 +12,7 @@ with open("teste.csv", "r", encoding="utf-8") as biblioteca: #"r" leitura "rt+"
     #readlines() => le cada linha separada do arquivo
     #write() =>adicionar uma informação na linha usanro "W" "A"
     linha  = "| {:<30} | {:^9} | {:^22} | {:^20} | {:^10} "
-    linha2 = "| {:<30} | {:^9} | {:^22} | {:^20} | R${:^10} "
+    linha2 = "| {:<30} | {:^9} | {:^22} | {:^20} | R${:^10,.2f} "
     cabecalho = linha.format("Título do Livro","Favorito","Autor","Categoria","Valor")
     
     print(cabecalho)
