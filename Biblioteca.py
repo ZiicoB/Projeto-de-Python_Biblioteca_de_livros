@@ -1,9 +1,9 @@
 import os
 os.system("cls")
 
-arquivoLivros = "Livros.csv"
-arquivoCategorias = "Categorias.csv"
-arquivoListaDesejo = "ListaDesejos.csv"
+arquivoLivros = "Arquivos/Livros.csv"
+arquivoCategorias = "Arquivos/Categorias.csv"
+arquivoListaDesejo = "Arquivos/ListaDesejos.csv"
 # /\ Registro de novas categorias e verificação das ja registradas.
 
 #comandos retorno
