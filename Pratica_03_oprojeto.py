@@ -1,7 +1,7 @@
 import os
 os.system("cls")
 
-arquivoLivros = "teste.csv"
+arquivoLivros = "Livros.csv"
 arquivoCategorias = "Categorias.csv"
 arquivoListaDesejo = "ListaDesejos.csv"
 # /\ Registro de novas categorias e verificação das ja registradas.
@@ -64,7 +64,7 @@ def principalMenu():
 def meusLivros():
     print(f"{separador}\n{menuMeusLivros}\n{separador}")
     
-    print(f"1- Novo Livro\n2- Lista por Categoria\n3- Lista por Autor\n4- Lista por Favoritos\n5- Alterar Livros\n0- Voltar")
+    print(f"1- Novo Livro\n2- Lista Completa\n3- Lista por Categoria\n4- Lista por Autor\n5- Lista por Favoritos\n0- Voltar")
     print("=-="*8)    
     opMeusLivros = input("Opção: ")
     
@@ -73,16 +73,16 @@ def meusLivros():
         novoLivro()
     elif opMeusLivros == "2":
         os.system("cls")
-        listaCategoria()
+        alterar()
     elif opMeusLivros == "3":
         os.system("cls")
-        listaAutor()
+        listaCategoria()
     elif opMeusLivros == "4":
         os.system("cls")
-        listaFavoritos()
+        listaAutor()
     elif opMeusLivros == "5":
         os.system("cls")
-        alterar()
+        listaFavoritos()
     elif opMeusLivros == "0":
         os.system("cls")
         principalMenu()
@@ -155,11 +155,64 @@ def novoLivro():
             os.system("cls")
             meusLivros()
 
-
+#Terminado
 def listaCategoria():
-    print()
+    print(f"{separador}\n{menuListaAutor}\n{separador}\n")
+    
+    with open (arquivoLivros, "r+", encoding="utf-8") as biblioteca:
+        linhas = biblioteca.readlines()
 
-#Formatação de texto com letras maiusculas e menusculas. >> add nas outras litas
+        with open(arquivoCategorias, "r", encoding="utf-8") as categorias:
+            linhasCat = categorias.readlines()
+            
+            for i,categoria in enumerate(linhasCat):
+                catFormat = categoria.upper().strip()
+                print(f"- {catFormat}")
+
+            nomeCateg = input("\nCategoria desejada: ").capitalize().strip()
+            os.system("cls")
+
+            if nomeCateg in [linha.strip().capitalize() for linha in linhasCat]:
+
+                print(f"{separador}\n{menuListaAutor}\n{separador}\n")
+                cabecalho = linha1.format("Título do Livro","Favoritos","Categoria","Autor","Valor")
+                print(cabecalho)
+                print("="* (len(cabecalho)+4))
+                
+                somaTotal = 0
+                for informacao in linhas:
+                    info = informacao.strip().split(",")
+                    nome = info[0]
+                    favoritos = info[1]
+                    categoria = info[2]
+                    autor = info[3]
+                    valor = float(info[4])
+                    favorito =  "{:^17}".format(amarelo+favoritos+fimCor)
+                    
+                    if categoria == nomeCateg and favoritos == "~" :
+                        print(linha2.format(nome,favoritos,categoria,autor,valor))
+                        somaTotal += valor
+                    elif categoria == nomeCateg and favoritos == "★":
+                        print(linha2.format(nome,favorito,categoria,autor,valor))
+                        somaTotal += valor
+                    else:
+                        print(end ="")
+            else:
+                print(f"Esssa Categoria não existe.\nPressione {vermelho}(Enter){fimCor}")
+                voltar = input("")
+                if voltar != enter:
+                    os.system("cls")
+                    listaCategoria()
+
+        print("="* (len(cabecalho)+4))
+        print(f"Valor total da lista: R$ {somaTotal:,.2f}\n")
+        print(f"Pressione {vermelho}(Enter){fimCor}")
+        voltar = input("")
+        if voltar != enter:
+            os.system("cls")
+            meusLivros()
+
+#Terminado
 def listaAutor():
     print(f"{separador}\n{menuListaAutor}\n{separador}\n")
     
@@ -167,7 +220,8 @@ def listaAutor():
         linhas = biblioteca.readlines()
         
         nomeAutor = input("Nome do Autor: ").capitalize().strip()
-        
+        os.system("cls")
+        print(f"{separador}\n{menuListaAutor}\n{separador}\n")
         cabecalho = linha1.format("Título do Livro","Favoritos","Categoria","Autor","Valor")
         print(cabecalho)
         print("="* (len(cabecalho)+4))
@@ -197,7 +251,6 @@ def listaAutor():
         if voltar != enter:
             os.system("cls")
             meusLivros()
-
 
 #Terminado OK
 def listaFavoritos():
@@ -234,125 +287,119 @@ def listaFavoritos():
             meusLivros()
 
 
-
 def alterar():
     print(f"{separador}\n{menuListaComp}\n{separador}")
     
-    with open(arquivoLivros, "r+", encoding="utf-8") as biblioteca:
-        linhas= biblioteca.readlines()
-        
+    with open (arquivoLivros, "r+", encoding="utf-8") as biblioteca:
+        linhas = biblioteca.readlines()
+
         cabecalho = linha1.format("Título do Livro","Favoritos","Categoria","Autor","Valor")
         print("\n ",cabecalho)
         print("="* (len(cabecalho)+4))
-        
+
         somaTotal = 0
-        for i, informacao in enumerate(linhas):
-            info = informacao.strip().split(",")
-            nome = info[0]
-            favoritos = info[1]
-            categoria = info[2]
-            autor = info[3]
-            valor = float(info[4])
-            favorito =  "{:^17}".format(amarelo+favoritos+fimCor)
+        for i , livro in enumerate(linhas):
+            infoLivro = livro.strip().split(',')
             
-            planilhaM1 = linha2.format(nome,favorito,categoria,autor,valor)
-            planilhaM2 = linha2.format(nome,favoritos,categoria,autor,valor)
-            if favoritos == "~":
+            nome = infoLivro[0]
+            favorito = infoLivro[1]
+            categoria = infoLivro[2]
+            autor = infoLivro[3]
+            valor = float(infoLivro[4])
+
+            favoritoS =  "{:^17}".format(amarelo+favorito+fimCor)            
+            planilhaM1 = linha2.format(nome,favoritoS,categoria,autor,valor)
+            planilhaM2 = linha2.format(nome,favorito,categoria,autor,valor)
+
+            if favorito == "~":
                 print(i+1, planilhaM2)
                 somaTotal += valor
             else:
                 print(i+1, planilhaM1)
                 somaTotal += valor
-                print(end ="")
-                
+
         print("="* (len(cabecalho)+4))
-        print(f"Valor total da lista: R$ {somaTotal:,.2f}\n")
-        
-        print("1- Alterar\n2- Deletar\n0- Voltar")
-        print("=-="*8)
-        opAlterar = input("Opção: ")
-        
-        if opAlterar == "1":
-            print("=-="*8)
-            editLivro = int(input(f"Numero da linha [1] até [{i+1}]: ")) -1
-            
-            if editLivro >=0 and editLivro <= len(linhas):
-                numLinha = linhas[editLivro]
-                info = numLinha.strip().split(",")
+        print(f"Valor total: R$ {amarelo}{somaTotal:,.2f}{fimCor} | Para voltar aperte{vermelho}0 - Zero{fimCor} .\n")
+
+        print(f"Linha editaveis [{amarelo}1{fimCor}] até [{amarelo}{i+1}{fimCor}].")
+        editarLivro = input("Numero da linha => ")
+
+        if editarLivro.isdigit():
+            editarLivros = int(editarLivro) -1
+
+            if editarLivros >= 0 and editarLivros < len(linhas):
+                numeroLinha = linhas[editarLivros]
+                infoLivro = numeroLinha.strip().split(',')
                 
-                novoNome = input("\nNome do Livro: ").capitalize().strip()
-                
-                print(f"\nÉ um livro {amarelo}Favorito{fimCor} ?")
-                print("1- Sim\n2- Não")
-                novoFav = input("Opção: ")
-                if novoFav == "1":
-                    favorito = "★"
-                    os.system("cls")
-                elif novoFav == "2":
-                    favorito ="~"
-                    os.system("cls")
-                else:
-                    print(f"Está é uma opção invalida.\n{vermelho}(ENTER){fimCor} para voltar")
-                    voltar = input()
-                    if voltar != startar:
-                        os.system("cls")
-                        alterar()
-                
-                with open(arquivoCategorias, "rt+", encoding="utf-8") as categorias:
-                    linhas = categorias.readlines()
+                print("1- Alterar \n2- Deletar \n3- Voltar\n")
+                opAlterar = input("Opção: ")
+
+                if opAlterar == '1':
+
+                    print("=-="*8)
+
+                    novoNome = input("\nNome do Livro: ").capitalize().strip()
+
+                    print(f"\nÉ um livro {amarelo}Favorito{fimCor} ?")
+                    print("1- Sim\n2- Não")
+                    novoFav = input("Opção: ")
+                    if novoFav == "1":
+                        novoFavorito = "★"
+                        
+                    elif novoFav == "2":
+                        novoFavorito ="~"
                     
-                    for i,categoria in enumerate(linhas):
-                        catFormat = categoria.upper().strip()
-                        print(f"- {catFormat}")
-                    print(f"\n## {amarelo}Você pode adicionar uma nova categoria{fimCor} ##\n")
+                    else:
+                        print(f"Está é uma opção invalida.\n{vermelho}(ENTER){fimCor} para voltar")
+                        voltar = input()
+                        if voltar != enter:
+                            os.system("cls")
+                            alterar()
                     
                     novaCat = input("Categoria do livro: ").capitalize().strip()
-                    if novaCat in [linha.strip().capitalize() for linha in linhas]:
+                    novoAutor = input("Nome do autor: ").capitalize().strip()
+                    novoValor = float(input("Valor do livro: "))
+
+                    infoLivro[0] = novoNome
+                    infoLivro[1] = novoFavorito
+                    infoLivro[2] = novaCat
+                    infoLivro[3] = novoAutor
+                    infoLivro[4] = novoValor
+                    linhas[editarLivros] =",".join(map(str, infoLivro)) + "\n"
+                    print("\n",linhas[editarLivros])
+                    #Vai atualizar a linha
+                    with open(arquivoLivros, "w", encoding="utf-8") as biblioteca:
+                        biblioteca.writelines(linhas)
+                        biblioteca.close()
+                    print(f"Livro Atualizado!\nPressione {vermelho}(Enter){fimCor}")
+                    voltar = input()
+                    if voltar != enter:
                         os.system("cls")
-                    else:
-                        categorias.write(f"{novaCat}\n")
-                        categorias.close()
+                        alterar()
+
+                elif opAlterar == '2':
+                    del linhas[editarLivros]
+                    with open(arquivoLivros, "w", encoding="utf-8") as biblioteca:
+                        biblioteca.writelines(linhas)
+                        biblioteca.close()
+                    print("Livro deletado !\nPressione {vermelho}(Enter){fimCor}")
+                    voltar = input()
+                    if voltar != enter:
                         os.system("cls")
-                
-                novoAutor = input("Nome do autor: ").capitalize().strip()
-                os.system("cls")
-                
-                novoValor = float(input("Valor do livro: "))
-                os.system("cls")
-                
-                info[0] = novoNome
-                info[1] = novoFav
-                info[2] = novaCat
-                info[3] = novoAutor
-                info[4] = novoValor
-                linhas[editLivro] = ",".join(map(str, info)) + "\n"
-                biblioteca.close()
-                
-                print(f"Livro Atualizado!\nPressione {vermelho}(Enter){fimCor}")
-                voltar = input("")
-                if voltar != enter:
-                    os.system("cls")
+                        alterar()
+
+                elif opAlterar == '0':
+                    biblioteca.close()
                     meusLivros()
 
-        elif opAlterar == "2": 
-            del linhas[editLivro]
-            print("Linha deletada com sucesso!\nPressione {vermelho}(Enter){fimCor}")
-            voltar = input("")
-            if voltar != enter:
-                os.system("cls")
-                meusLivros()
-                
-        elif opAlterar == "0":
-            os.system("cls")
-            principalMenu()
+                else:
+                    voltar = input("Opção invalida Voltar Enter.")
+                    if voltar != enter:
+                        #os.system("cls")
+                        alterar()
         else:
-            print("Opação invalida!\nPressione {vermelho}(Enter){fimCor}")
-            voltar = input("")
-            if voltar != enter:
-                os.system("cls")
-                meusLivros()
-
-    
+            os.system("cls")
+            meusLivros()
             
 ###################################################################
 
@@ -419,11 +466,11 @@ def livroDesejados():
             os.system("cls")
             listaDesejos()
 
-#Tratamento de erro // Add o Editar
+#Tratamento de erro // adicionar voltar caso nao tenha a linha existente
 def exibirEditar():
     print(f"{separador}\n{menuListaDj}\n{separador}\n")
     
-    with open(arquivoListaDesejo, "a", encoding="utf-8") as ListaDesejos:
+    with open(arquivoListaDesejo, "r+", encoding="utf-8") as ListaDesejos:
         linhas= ListaDesejos.readlines()
         
         cabecalho = linha0.format("Título do Livro","Categoria","Autor","Valor")
@@ -431,8 +478,9 @@ def exibirEditar():
         print("="* (len(cabecalho)+4))
         
         somaTotal = 0
-        for i, informacao in enumerate(linhas):
-            info = informacao.strip().split(",")
+        for i, livro in enumerate(linhas):
+            info = livro.strip().split(",")
+
             nome = info[0]
             categoria = info[1]
             autor = info[2]
@@ -444,74 +492,69 @@ def exibirEditar():
 
                 
         print("="* (len(cabecalho)+4))
-        print(f"Valor total da lista: R$ {somaTotal:,.2f}\n")
-        
-        print("1- Alterar\n2- Deletar\n0- Voltar")
-        opAlterar = input("Opção: ")
-        
-        if opAlterar == "1":
-            
-            editLivroDJ = int(input(f"Numero do Livro (1) a ({i+1}): ")) -1
-            
-            if editLivroDJ >=0 and editLivroDJ <= len(linhas):
-                numLinha = linhas[editLivroDJ]
-                info = numLinha.strip().split(",")
-                
-                novoNome = input("Nome do Livro: ").capitalize().strip()
-                os.system("cls")
-                
-                with open(arquivoCategorias, "rt+", encoding="utf-8") as categorias:
-                    linhas = categorias.readlines()
-                    
-                    for i,categoria in enumerate(linhas):
-                        catFormat = categoria.upper().strip()
-                        print(f"{i+1}- {catFormat}")
-                    print(f"\n## {amarelo}Você pode adicionar uma nova categoria{fimCor} ##\n")
-                    
-                    novaCat = input("Categoria do livro: ").capitalize().strip()
-                    if novaCat in [linha.strip().capitalize() for linha in linhas]:
-                        os.system("cls")
-                    else:
-                        categorias.write(f"{novaCat}\n")
-                        categorias.close()
-                        os.system("cls")
-                
-                novoAutor = input("Nome do autor: ").capitalize().strip()
-                os.system("cls")
-                
-                novoValor = float(input("Valor do livro: "))
-                os.system("cls")
-                
-                info[0] = novoNome
-                info[1] = novaCat
-                info[2] = novoAutor
-                info[3] = novoValor
-                linhas[editLivroDJ] = ",".join(map(str,info)) +"\n"
-                ListaDesejos.close()
-                
-                print("Livro Atualizado!\nPressione {vermelho}(Enter){fimCor}")
-                voltar = input("")
-                if voltar != enter:
-                    os.system("cls")
-                    meusLivros()
+        print(f"Valor total: R$ {amarelo}{somaTotal:,.2f}{fimCor} | Para voltar aperte{vermelho}0 - Zero{fimCor} .\n")
 
-        elif opAlterar == "2": 
-            del linhas[editLivroDJ]
-            print("Linha deletada com sucesso!\nPressione {vermelho}(Enter){fimCor}")
-            voltar = input("")
-            if voltar != enter:
-                os.system("cls")
-                meusLivros()
-        
-        elif opAlterar == "0":
-            os.system("cls")
-            meusLivros()
+        print(f"Linha editaveis [{amarelo}1{fimCor}] até [{amarelo}{i+1}{fimCor}].")
+        editarLivro = input("Numero da linha => ")
+
+        if editarLivro.isdigit():
+            editarLivros = int(editarLivro) -1
+
+            if editarLivros >= 0 and editarLivros < len(linhas):
+                numeroLinha = linhas[editarLivros]
+                info = numeroLinha.strip().split(',')
+                
+                print("1- Alterar \n2- Deletar \n3- Voltar\n")
+                opAlterar = input("Opção: ")
+
+                if opAlterar == '1':
+
+                    print("=-="*8)
+
+                    novoNome = input("\nNome do Livro: ").capitalize().strip()
+                    novaCat = input("Categoria do livro: ").capitalize().strip()
+                    novoAutor = input("Nome do autor: ").capitalize().strip()
+                    novoValor = float(input("Valor do livro: "))
+
+                    info[0] = novoNome
+                    info[1] = novaCat
+                    info[2] = novoAutor
+                    info[3] = novoValor
+                    linhas[editarLivros] =",".join(map(str, info)) + "\n"
+                    print("\n",linhas[editarLivros])
+                    #Vai atualizar a linha
+                    with open(arquivoListaDesejo, "w", encoding="utf-8") as ListaDesejos:
+                        ListaDesejos.writelines(linhas)
+                        ListaDesejos.close()
+                    print(f"Livro Atualizado!\nPressione {vermelho}(Enter){fimCor}")
+                    voltar = input()
+                    if voltar != enter:
+                        os.system("cls")
+                        exibirEditar()
+
+                elif opAlterar == '2':
+                    del linhas[editarLivros]
+                    with open(arquivoListaDesejo, "w", encoding="utf-8") as ListaDesejos:
+                        ListaDesejos.writelines(linhas)
+                        ListaDesejos.close()
+                    print("Livro deletado !\nPressione {vermelho}(Enter){fimCor}")
+                    voltar = input()
+                    if voltar != enter:
+                        os.system("cls")
+                        exibirEditar()
+
+                elif opAlterar == '0':
+                    ListaDesejos.close()
+                    listaDesejos()
+
+                else:
+                    voltar = input("Opção invalida Voltar Enter.")
+                    if voltar != enter:
+                        #os.system("cls")
+                        exibirEditar()
         else:
-            print("Opação invalida!\nPressione {vermelho}(Enter){fimCor}")
-            voltar = input("")
-            if voltar != enter:
-                os.system("cls")
-                meusLivros()
+            os.system("cls")
+            listaDesejos()
         
 #Terminado ok
 def startar():
