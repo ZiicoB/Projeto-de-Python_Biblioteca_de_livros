@@ -32,10 +32,9 @@ menuNovoLivro = "{:<6}{}".format("",f"NOVO LIVRO")
 menuListaCat = "{:<6}{}".format("",f"LISTA CATEGORIA")
 menuListaAutor = "{:<6}{}".format("",f"LISTA AUTOR")
 menuListaFav = "{:<6}{}".format("",f"LISTA FAVORITOS")
-menuListaComp = "{:<6}{}".format("",f"LISTA COMPLETA")
 menuListaDj = "{:<4}{}".format("",f"LISTA DE DESEJOS")
 
-#Terminado
+
 def principalMenu():
     print(f"{separador}\n{menuMain}\n{separador}")
     
@@ -50,7 +49,7 @@ def principalMenu():
     elif opMenuMain == "2":
         os.system("cls")
         listaDesejos()        
-    elif opMenuMain == "0": # Fazer tratramento de erro para (Caracter e Str)
+    elif opMenuMain == "0":
         os.system("cls")
         print(f"{vermelho}PROGRAMA FINALIZADO!{fimCor}\n")
         return
@@ -94,7 +93,7 @@ def meusLivros():
             os.system("cls")
             meusLivros()
         
-#tratamento de erro
+
 def novoLivro():
     print(f"{separador}\n{menuNovoLivro}\n{separador}")
     
@@ -103,14 +102,13 @@ def novoLivro():
         nomeLivro = input("Nome do Livro: ").capitalize().strip()
         os.system("cls")
         
-        print(f"{separador}\n{menuNovoLivro}\n{separador}")
         print(f"É um livro {amarelo}Favorito{fimCor} ?")
         print("1- Sim\n2- Não")
         print("=-="*8)
-        favoritar = int(input("Opção: ")) #Tratar erro ao receber uma Str em vem de Int
-        if favoritar == 1:
+        favoritar = (input("Opção: "))
+        if favoritar == "1":
             favorito = "★"
-        elif favoritar == 2:
+        elif favoritar == "2":
             favorito ="~"
         else:
             print(f"Está é uma opção invalida.\n{vermelho}(ENTER){fimCor} para voltar")
@@ -120,7 +118,6 @@ def novoLivro():
                 meusLivros()
         os.system("cls")
         
-        print(f"{separador}\n{menuNovoLivro}\n{separador}")
         with open(arquivoCategorias, "rt+", encoding="utf-8") as categorias:
             linhas = categorias.readlines()
             
@@ -131,21 +128,26 @@ def novoLivro():
             
             categoriaOp = input("Categoria do livro: ").capitalize().strip()
             if categoriaOp in [linha.strip().capitalize() for linha in linhas]:
+                categorias.close()
                 os.system("cls")
             else:
                 categorias.write(f"{categoriaOp}\n")
                 categorias.close()
                 os.system("cls")
         
-        print(f"{separador}\n{menuNovoLivro}\n{separador}")
         autor = input("Nome do autor: ").capitalize().strip()
         os.system("cls")
-        
-        print(f"{separador}\n{menuNovoLivro}\n{separador}")
-        valor = float(input("Valor do livro: "))
-        valor2F = float(f"{valor:.2f}")
-        os.system("cls")
-        
+        try:
+            valor = float(input("Valor do livro: "))
+            valor2F = float(f"{valor:.2f}")
+            os.system("cls")
+        except ValueError:
+            print(f"Informação invalida!\nPressione {vermelho}(Enter){fimCor}")
+            voltar = input("")
+            if voltar != enter:
+                os.system("cls")
+                meusLivros()
+            
         print(f"{separador}\n{menuNovoLivro}\n{separador}")    
         biblioteca.write(f"{nomeLivro},{favorito},{categoriaOp},{autor},{valor2F}\n")
         biblioteca.close()
@@ -156,29 +158,31 @@ def novoLivro():
             os.system("cls")
             meusLivros()
 
-#Terminado
+
 def listaCategoria():
-    print(f"{separador}\n{menuListaAutor}\n{separador}\n")
-    
+    print(separador)
     with open (arquivoLivros, "r+", encoding="utf-8") as biblioteca:
         linhas = biblioteca.readlines()
-
+        
+        print(separador)
         with open(arquivoCategorias, "r", encoding="utf-8") as categorias:
             linhasCat = categorias.readlines()
+            
             
             for i,categoria in enumerate(linhasCat):
                 catFormat = categoria.upper().strip()
                 print(f"- {catFormat}")
-
-            nomeCateg = input("\nCategoria desejada: ").capitalize().strip()
+            categorias.close()
+            
+            print(separador)
+            print(f"{vermelho}Voltar{fimCor} => 0")
+            nomeCateg = input("Categoria desejada: ").capitalize().strip()
             os.system("cls")
 
             if nomeCateg in [linha.strip().capitalize() for linha in linhasCat]:
-
-                print(f"{separador}\n{menuListaAutor}\n{separador}\n")
-                cabecalho = linha1.format("Título do Livro","Favoritos","Categoria","Autor","Valor")
-                print(cabecalho)
-                print(f"{azul}={fimCor}"*  (len(cabecalho)+4))
+                cabecalhoC = linha1.format("Título do Livro","Favoritos","Categoria","Autor","Valor")
+                print(cabecalhoC)
+                print(f"{azul}={fimCor}"*  (len(cabecalhoC)+6))
                 
                 somaTotal = 0
                 for informacao in linhas:
@@ -198,6 +202,17 @@ def listaCategoria():
                         somaTotal += valor
                     else:
                         print(end ="")
+                        
+                print(f"{azul}={fimCor}"* (len(cabecalhoC)+6))
+                print(f"Valor total: R$ {amarelo}{somaTotal:,.2f}{fimCor} | {vermelho}(Enter){fimCor} Para voltar.")
+                voltar = input("")
+                if voltar != enter:
+                    os.system("cls")
+                    meusLivros()
+                    
+            elif nomeCateg == "0":
+                os.system("cls")
+                meusLivros()   
             else:
                 print(f"Esssa Categoria não existe.\nPressione {vermelho}(Enter){fimCor}")
                 voltar = input("")
@@ -205,14 +220,7 @@ def listaCategoria():
                     os.system("cls")
                     listaCategoria()
 
-        print(f"{azul}={fimCor}"* (len(cabecalho)+4))
-        print(f"Valor total: R$ {amarelo}{somaTotal:,.2f}{fimCor} | {vermelho}(Enter){fimCor} Para voltar.\n")
-        voltar = input("")
-        if voltar != enter:
-            os.system("cls")
-            meusLivros()
 
-#Terminado
 def listaAutor():
     print(f"{separador}\n{menuListaAutor}\n{separador}\n")
     
@@ -224,7 +232,7 @@ def listaAutor():
         print(f"{separador}\n{menuListaAutor}\n{separador}\n")
         cabecalho = linha1.format("Título do Livro","Favoritos","Categoria","Autor","Valor")
         print(cabecalho)
-        print(f"{azul}={fimCor}"* (len(cabecalho)+4))
+        print(f"{azul}={fimCor}"* (len(cabecalho)+6))
         
         somaTotal = 0
         for informacao in linhas:
@@ -244,14 +252,14 @@ def listaAutor():
                 somaTotal += valor
             else:
                 print(end ="")
-        print(f"{azul}={fimCor}"* (len(cabecalho)+4))
-        print(f"Valor total: R$ {amarelo}{somaTotal:,.2f}{fimCor} | {vermelho}(Enter){fimCor} Para voltar.\n")
+        print(f"{azul}={fimCor}"* (len(cabecalho)+6))
+        print(f"Valor total: R$ {amarelo}{somaTotal:,.2f}{fimCor} | {vermelho}(Enter){fimCor} Para voltar.")
         voltar = input("")
         if voltar != enter:
             os.system("cls")
             meusLivros()
 
-#Terminado OK
+
 def listaFavoritos():
     print(f"{separador}\n{menuListaFav}\n{separador}\n")
     
@@ -260,7 +268,7 @@ def listaFavoritos():
         
         cabecalho = linha1.format("Título do Livro","Favoritos","Categoria","Autor","Valor")
         print(cabecalho)
-        print(f"{azul}={fimCor}"* (len(cabecalho)+4))
+        print(f"{azul}={fimCor}"* (len(cabecalho)+6))
         
         somaTotal = 0
         for informacao in linhas:
@@ -277,23 +285,21 @@ def listaFavoritos():
                 somaTotal += valor
             else:
                 print(end ="")
-        print(f"{azul}={fimCor}"* (len(cabecalho)+4))
-        print(f"Valor total: R$ {amarelo}{somaTotal:,.2f}{fimCor} | {vermelho}(Enter){fimCor} Para voltar.\n")
+        print(f"{azul}={fimCor}"* (len(cabecalho)+6))
+        print(f"Valor total: R$ {amarelo}{somaTotal:,.2f}{fimCor} | {vermelho}(Enter){fimCor} Para voltar.")
         voltar = input("")
         if voltar != enter:
             os.system("cls")
             meusLivros()
 
-#tratamento de erro
+
 def alterar():
-    print(f"{separador}\n{menuListaComp}\n{separador}")
-    
     with open (arquivoLivros, "r+", encoding="utf-8") as biblioteca:
         linhasL = biblioteca.readlines()
 
         cabecalho = linha1.format("Título do Livro","Favoritos","Categoria","Autor","Valor")
         print("\n ",cabecalho)
-        print(f"{azul}={fimCor}"* (len(cabecalho)+4))
+        print(f"{azul}={fimCor}"* (len(cabecalho)+6))
 
         somaTotal = 0
         for i , livro in enumerate(linhasL):
@@ -316,10 +322,10 @@ def alterar():
                 print(i+1, planilhaM1)
                 somaTotal += valor
 
-        print(f"{azul}={fimCor}"* (len(cabecalho)+4))
+        print(f"{azul}={fimCor}"* (len(cabecalho)+6))
         print(f"Valor total: R$ {amarelo}{somaTotal:,.2f}{fimCor} | {vermelho}(Enter){fimCor} Para voltar.\n")
 
-        print(f"Linha editaveis [{amarelo}1{fimCor}] até [{amarelo}{i+1}{fimCor}].")
+        print(f"Linhas editaveis [{amarelo}1{fimCor}] até [{amarelo}{i+1}{fimCor}].")
         editarLivro = input("Numero da linha => ")
 
         if editarLivro.isdigit():
@@ -328,8 +334,14 @@ def alterar():
             if editarLivros >= 0 and editarLivros < len(linhasL):
                 numeroLinha = linhasL[editarLivros]
                 infoLivro = numeroLinha.strip().split(',')
+                os.system("cls")
                 
-                print("\n1- Alterar \n2- Deletar \n3- Voltar\n")
+                numLinFormat = "| {:<20} | {:^6} | {:^18} | {:^18} | R${:>9}".format(*infoLivro)
+                print(f"{azul}={fimCor}"* (len(numLinFormat)+6))
+                print(numLinFormat)
+                print(f"{azul}={fimCor}"* (len(numLinFormat)+6))
+                
+                print("\n1- Alterar \n2- Deletar \n0- Voltar\n")
                 opAlterar = input("Opção: ")
                 
                 if opAlterar == '1':
@@ -358,10 +370,11 @@ def alterar():
                         linhascat = categorias.readlines()
                         os.system("cls")
                         
+                        print(separador)
                         for x,categoria in enumerate(linhascat):
                             catFormat = categoria.upper().strip()
                             print(f"- {catFormat}")
-                        
+                        print(separador)
                         novaCat = input("Categoria do livro: ").capitalize().strip()
                         if novaCat not in [linha.strip().capitalize() for linha in linhascat]:
                             os.system("cls")
@@ -374,7 +387,16 @@ def alterar():
                     os.system("cls")
 
                     novoAutor = input("Nome do autor: ").capitalize().strip()
-                    novoValor = float(input("Valor do livro: "))
+                    os.system("cls")
+                    try:
+                        novoValor = float(input("Valor do livro: "))
+                        os.system("cls")
+                    except ValueError:
+                        print(f"Informação invalida!\nPressione {vermelho}(Enter){fimCor}")
+                        voltar = input("")
+                        if voltar != enter:
+                            os.system("cls")
+                            meusLivros()
 
                     infoLivro[0] = novoNome
                     infoLivro[1] = novoFavorito
@@ -423,9 +445,8 @@ def alterar():
             os.system("cls")
             meusLivros()
             
-###################################################################
+#===== Funções a adicionadas a parte =====#
 
-# Tratamento de erro
 def listaDesejos():
     print(f"{separador}\n{menuListaDj}\n{separador}")
 
@@ -443,7 +464,7 @@ def listaDesejos():
         os.system("cls")
         principalMenu()
 
-# Tratamento de erro
+
 def livroDesejados():
     print(f"{separador}\n{menuNovoLivro}\n{separador}")
     
@@ -452,14 +473,15 @@ def livroDesejados():
         nomeLivroDj = input("Nome do Livro: ").capitalize().strip()
         os.system("cls")
         
-        print(f"{separador}\n{menuNovoLivro}\n{separador}")
         with open(arquivoCategorias, "rt+", encoding="utf-8") as categorias:
             linhas = categorias.readlines()
             
+            print(separador)
             for i,categoria in enumerate(linhas):
                 catFormat = categoria.upper().strip()
                 print(f"- {catFormat}")
-            print(f"\n## {amarelo}Você pode adicionar uma nova categoria{fimCor} ##\n")
+            print(separador)
+            print(f"# {amarelo}Você pode adicionar uma nova categoria{fimCor} #\n")
             
             categoriaOp = input("Categoria do livro: ").capitalize().strip()
             if categoriaOp in [linha.strip().capitalize() for linha in linhas]:
@@ -469,16 +491,19 @@ def livroDesejados():
                 categorias.close()
                 os.system("cls")
         
-        print(f"{separador}\n{menuNovoLivro}\n{separador}")
         autor = input("Nome do autor: ").capitalize().strip()
         os.system("cls")
-        
-        print(f"{separador}\n{menuNovoLivro}\n{separador}")
-        valor = float(input("Valor do livro: "))
-        valor2F = float(f"{valor:.2f}")
-        os.system("cls")
-        
-        print(f"{separador}\n{menuNovoLivro}\n{separador}")    
+        try:
+            valor = float(input("Valor do livro: "))
+            valor2F = float(f"{valor:.2f}")
+            os.system("cls")
+        except ValueError:
+            print(f"Informação invalida!\nPressione {vermelho}(Enter){fimCor}")
+            voltar = input("")
+            if voltar != enter:
+                os.system("cls")
+                meusLivros()
+         
         ListaDesejos.write(f"{nomeLivroDj},{categoriaOp},{autor},{valor2F}\n")
         ListaDesejos.close()
         
@@ -490,15 +515,12 @@ def livroDesejados():
 
 
 def exibirEditar():
-    print(f"{separador}\n{menuListaDj}\n{separador}\n")
-    
-
     with open(arquivoListaDesejo, "r+", encoding="utf-8") as ListaDesejos:
         linhasF= ListaDesejos.readlines()
         
         cabecalho = linha0.format("Título do Livro","Categoria","Autor","Valor")
         print("\n ",cabecalho)
-        print(f"{azul}={fimCor}"* (len(cabecalho)+4))
+        print(f"{azul}={fimCor}"* (len(cabecalho)+6))
         
         somaTotal = 0
         for i, livro in enumerate(linhasF):
@@ -513,11 +535,10 @@ def exibirEditar():
             print(i+1, planilhaM)
             somaTotal += valor
 
-                
-        print(f"{azul}={fimCor}"* (len(cabecalho)+4))
+        print(f"{azul}={fimCor}"* (len(cabecalho)+6))
         print(f"Valor total: R$ {amarelo}{somaTotal:,.2f}{fimCor} | {vermelho}(Enter){fimCor} Para voltar.\n")
 
-        print(f"Linha editaveis [{amarelo}1{fimCor}] até [{amarelo}{i+1}{fimCor}].")
+        print(f"Linhas editaveis [{amarelo}1{fimCor}] até [{amarelo}{i+1}{fimCor}].")
         editarLivro = input("Numero da linha => ")
 
         if editarLivro.isdigit():
@@ -526,8 +547,14 @@ def exibirEditar():
             if editarLivros >= 0 and editarLivros < len(linhasF):
                 numeroLinha = linhasF[editarLivros]
                 info = numeroLinha.strip().split(',')
+                os.system("cls")
                 
-                print("\n1- Alterar \n2- Deletar \n3- Voltar\n")
+                numLinFormatt = "| {:<20} | {:^18} | {:^18} | R${:>9}".format(*info)
+                print(f"{azul}={fimCor}"* (len(numLinFormatt)+6))
+                print(numLinFormatt)
+                print(f"{azul}={fimCor}"* (len(numLinFormatt)+6))
+                
+                print("\n1- Alterar \n2- Deletar \n0- Voltar\n")
                 opAlterar = input("Opção: ")
 
                 if opAlterar == '1':
@@ -558,8 +585,15 @@ def exibirEditar():
                     
                     novoAutor = input("Nome do autor: ").capitalize().strip()
                     os.system("cls")
-                    novoValor = float(input("Valor do livro: "))
-                    os.system("cls")
+                    try:
+                        novoValor = float(input("Valor do livro: "))
+                        os.system("cls")
+                    except ValueError:
+                        print(f"Informação invalida!\nPressione {vermelho}(Enter){fimCor}")
+                        voltar = input("")
+                        if voltar != enter:
+                            os.system("cls")
+                            meusLivros()
 
                     info[0] = novoNome
                     info[1] = novaCat
