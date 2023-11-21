@@ -12,15 +12,15 @@ Projeto realisado por:
 >> É possivel adicionar novas Categorias ao cadastras um novo livro.    
 >> Também é possivel fazer alterações em cada um dos já livros registrados.
 >
-> ![Tabela_De_Livros](./arquivos/imagens/Tabela.png)
+> ![Tabela_De_Livros](./Arquivos/Imagens/Tabela.png)
 >
 > O usuário pode filtrar e verificar seus livros por:    
 > + **Categoria**
 > + **Autor**
 > + **Livros Favoritos**
 >
->![Tabela_De_Livros](./arquivos/imagens/Menu.png)
+>![Tabela_De_Livros](./Arquivos/Imagens/Menu.png)
 >
 ##  Manual
-[<img src="./arquivos/imagens/pdf_icone.png" width="80">](./arquivos/manual/Manual_da_Biblioteca.pdf_icone)
+[<img src="./Arquivos/Imagens/pdf_icone.png" width="80">](./Arquivos/Manual/Manual_da_Biblioteca.pdf)
     
