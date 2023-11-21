@@ -21,7 +21,7 @@ with open("teste.csv", "r", encoding="utf-8") as biblioteca: #"r" leitura "rt+"
 
     somatotal = 0
     for informacao in linhas:
-        info = informacao.strip().split(",") #retira espaçamentos e le velores apos a virgula
+        info = informacao.strip().split(",")
         nome = info[0]
         favoritos = info[1]
         categoria = info[2]
