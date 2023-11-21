@@ -8,7 +8,8 @@ Projeto realisado por:
 
 > O programa foi criado para gerenciar uma simples biblioteca de livros,
 > onde o usuário pode adicionar os livros que ele deseja comprar e os livros que ja possui. 
-> Sendo organizados por (Nome, favorito, Categoria, Autor e Valor)
+> Sendo organizados por    
+> (Nome, favorito, Categoria, Autor e Valor)
 >> É possivel adicionar novas Categorias ao cadastras um novo livro.    
 >> Também é possivel fazer alterações em cada um dos já livros registrados.
 >
