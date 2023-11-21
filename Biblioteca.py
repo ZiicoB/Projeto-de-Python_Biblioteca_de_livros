@@ -382,7 +382,7 @@ def alterar():
                             voltar = input()
                             if voltar != enter:
                                 os.system("cls")
-                                exibirEditar()
+                                alterar()
                     categorias.close()
                     os.system("cls")
 
@@ -450,7 +450,7 @@ def alterar():
 def listaDesejos():
     print(f"{separador}\n{menuListaDj}\n{separador}")
 
-    print(f"1- Novo Livro\n2- Exibir e Editar\n0- Voltar")
+    print(f"1- Novo Livro\n2- Desejados\n0- Voltar")
     print("=-="*8)
     opMeusLivros= input("Opção: ")
     
@@ -502,7 +502,7 @@ def livroDesejados():
             voltar = input("")
             if voltar != enter:
                 os.system("cls")
-                meusLivros()
+                listaDesejos()
          
         ListaDesejos.write(f"{nomeLivroDj},{categoriaOp},{autor},{valor2F}\n")
         ListaDesejos.close()
@@ -593,7 +593,7 @@ def exibirEditar():
                         voltar = input("")
                         if voltar != enter:
                             os.system("cls")
-                            meusLivros()
+                            exibirEditar()
 
                     info[0] = novoNome
                     info[1] = novaCat
@@ -609,7 +609,7 @@ def exibirEditar():
                     voltar = input()
                     if voltar != enter:
                         os.system("cls")
-                        exibirEditar()
+                        listaDesejos()
 
                 elif opAlterar == '2':
                     del linhasF[editarLivros]
@@ -621,7 +621,7 @@ def exibirEditar():
                     voltar = input()
                     if voltar != enter:
                         os.system("cls")
-                        exibirEditar()
+                        listaDesejos()
 
                 elif opAlterar == '0':
                     ListaDesejos.close()

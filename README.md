@@ -1,24 +1,26 @@
 # Projeto Python : Biblioteca de livros (Basico)
-Projeto avaliativo para a cadeira - Fundamentos da Programação.
+Projeto avaliativo para a cadeira - Fundamentos da Programação.    
+Projeto realisado por:    
++ **Adriano Barnard Medeiros**    
++ **João pedro Maranhão**    
++ **Caio Correia**    
++ **Igor Cubits**
 
-Projeto realisado por: Adriano Barnard Medeiros, João pedro Maranhão, Caio Correia e Igor Cubits
-
-# Manual
-1- O programa pode ser inicializado assim que o usuario pressionar (Enter), independente se foi digitado algo antes de ser precionado.
-
-2- Ao entrar, sera exibido um menu com as opções "Meus Livros", "Lista de desejos" e "Encerrar", que ira finalizar o programa.
-
-Meus livros ira contrer as opções.
-1- Novo livro
-2- Lista por Categoria
-3- Lista por Altor
-4- Alterar
-0- Voiltar
-
-Lista de Desejos ira conter as opções.
-1- Novo livro
-2- Alterar
-0- Voltar
-
-
+> O programa foi criado para gerenciar uma simples biblioteca de livros,
+> onde o usuário pode adicionar os livros que ele deseja comprar e os livros que ja possui. 
+> Sendo organizados por (Nome, favorito, Categoria, Autor e Valor)
+>> É possivel adicionar novas Categorias ao cadastras um novo livro.    
+>> Também é possivel fazer alterações em cada um dos já livros registrados.
+>
+> ![Tabela_De_Livros](./arquivos/imagens/Tabela.png)
+>
+> O usuário pode filtrar e verificar seus livros por:    
+> + **Categoria**
+> + **Autor**
+> + **Livros Favoritos**
+>
+>![Tabela_De_Livros](./arquivos/imagens/Menu.png)
+>
+##  Manual
+[<img src="./arquivos/imagens/pdf_icone.png" width="80">](./arquivos/manual/Manual_da_Biblioteca.pdf_icone)
     
