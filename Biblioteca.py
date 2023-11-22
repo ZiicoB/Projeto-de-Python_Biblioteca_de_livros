@@ -4,7 +4,6 @@ os.system("cls")
 arquivoLivros = "Arquivos/Livros.csv"
 arquivoCategorias = "Arquivos/Categorias.csv"
 arquivoListaDesejo = "Arquivos/ListaDesejos.csv"
-# /\ Registro de novas categorias e verificação das ja registradas.
 
 #comandos retorno
 enter = "x5s8e2"
@@ -105,7 +104,8 @@ def novoLivro():
         print(f"É um livro {amarelo}Favorito{fimCor} ?")
         print("1- Sim\n2- Não")
         print("=-="*8)
-        favoritar = (input("Opção: "))
+
+        favoritar = (input("Opção: "))        
         if favoritar == "1":
             favorito = "★"
         elif favoritar == "2":
@@ -153,6 +153,7 @@ def novoLivro():
         biblioteca.close()
         
         print(f"\nLivro adicionado com sucesso!\nPressione {vermelho}(Enter){fimCor}")
+
         voltar = input("")
         if voltar != enter:
             os.system("cls")
@@ -176,6 +177,7 @@ def listaCategoria():
             
             print(separador)
             print(f"{vermelho}Voltar{fimCor} => 0")
+
             nomeCateg = input("Categoria desejada: ").capitalize().strip()
             os.system("cls")
 
@@ -229,7 +231,9 @@ def listaAutor():
         
         nomeAutor = input("Nome do Autor: ").capitalize().strip()
         os.system("cls")
+
         print(f"{separador}\n{menuListaAutor}\n{separador}\n")
+
         cabecalho = linha1.format("Título do Livro","Favoritos","Categoria","Autor","Valor")
         print(cabecalho)
         print(f"{azul}={fimCor}"* (len(cabecalho)+6))
@@ -252,8 +256,10 @@ def listaAutor():
                 somaTotal += valor
             else:
                 print(end ="")
+
         print(f"{azul}={fimCor}"* (len(cabecalho)+6))
         print(f"Valor total: R$ {amarelo}{somaTotal:,.2f}{fimCor} | {vermelho}(Enter){fimCor} Para voltar.")
+
         voltar = input("")
         if voltar != enter:
             os.system("cls")
@@ -326,8 +332,8 @@ def alterar():
         print(f"Valor total: R$ {amarelo}{somaTotal:,.2f}{fimCor} | {vermelho}(Enter){fimCor} Para voltar.\n")
 
         print(f"Linhas editaveis [{amarelo}1{fimCor}] até [{amarelo}{i+1}{fimCor}].")
-        editarLivro = input("Numero da linha => ")
 
+        editarLivro = input("Numero da linha => ")
         if editarLivro.isdigit():
             editarLivros = int(editarLivro) -1
 
@@ -452,8 +458,8 @@ def listaDesejos():
 
     print(f"1- Novo Livro\n2- Desejados\n0- Voltar")
     print("=-="*8)
-    opMeusLivros= input("Opção: ")
-    
+
+    opMeusLivros= input("Opção: ")    
     if opMeusLivros == "1":
         os.system("cls")
         livroDesejados()
@@ -539,8 +545,8 @@ def exibirEditar():
         print(f"Valor total: R$ {amarelo}{somaTotal:,.2f}{fimCor} | {vermelho}(Enter){fimCor} Para voltar.\n")
 
         print(f"Linhas editaveis [{amarelo}1{fimCor}] até [{amarelo}{i+1}{fimCor}].")
-        editarLivro = input("Numero da linha => ")
 
+        editarLivro = input("Numero da linha => ")
         if editarLivro.isdigit():
             editarLivros = int(editarLivro) -1
 
@@ -555,8 +561,8 @@ def exibirEditar():
                 print(f"{azul}={fimCor}"* (len(numLinFormatt)+6))
                 
                 print("\n1- Alterar \n2- Deletar \n0- Voltar\n")
-                opAlterar = input("Opção: ")
 
+                opAlterar = input("Opção: ")
                 if opAlterar == '1':
                     os.system("cls")
                     print(f"{azul}=-={fimCor}"*8)
