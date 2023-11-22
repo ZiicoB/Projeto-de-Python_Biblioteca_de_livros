@@ -1,4 +1,4 @@
-# Projeto Python : Biblioteca de livros (Basico)
+# Projeto Faculdativo (Avaliativo) : Biblioteca de livros (Python)
 Projeto avaliativo para a cadeira - Fundamentos da Programação.    
 Projeto realisado por:    
 + **Adriano Barnard Medeiros**    
@@ -22,6 +22,6 @@ Projeto realisado por:
 >
 >![Tabela_De_Livros](./Arquivos/Imagens/Menu.png)
 >
-##  Manual
+##  Manual e Fluxograma 
 [<img src="./Arquivos/Imagens/pdf_icone.png" width="80">](./Arquivos/Manual/Manual_da_Biblioteca.pdf)
-    
+[<img src="./Arquivos/Imagens/Fluxograma.png" width="80">](./Arquivos/Manual/Fluxograma.pdf)
