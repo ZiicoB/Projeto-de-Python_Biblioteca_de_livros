@@ -1,10 +1,7 @@
 # Projeto Faculdativo (Avaliativo) : Biblioteca de livros (Python)
 Projeto avaliativo para a cadeira - Fundamentos da Programação.    
 Projeto realisado por:    
-+ **Adriano Barnard Medeiros**    
-+ **João pedro Maranhão**    
-+ **Caio Correia**    
-+ **Igor Cubits**
++ **Adriano Barnard Medeiros** 
 
 > O programa foi criado para gerenciar uma simples biblioteca de livros,
 > onde o usuário pode adicionar os livros que ele deseja comprar e os livros que ja possui. 
